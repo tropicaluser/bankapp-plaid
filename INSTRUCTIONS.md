@@ -8,6 +8,8 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 1. 🤖 [Setup](#setup)
 2. ⚙️ [File & Folder Structure](#file-structure)
 3. ⚙️ [Home Page UI](#home-page-ui)
+4. ⚙️ [Sidebar](#sidebar)
+5. ⚙️ [Auth Page UI](#auth-page-ui)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -50,7 +52,13 @@ npm i query-string react-countup chart.js react-chartjs-2
 
 ## <a name="sidebar">⚙️ Sidebar</a>
 
-
-commit: "add sidebar"
+commit: "add sidebar right"
 `npx shadcn@latest add sheet`
 
+commit: "add sidebar left"
+
+...
+
+## <a name="auth-page-ui">⚙️ Auth Page UI</a>
+
+`npx shadcn@latest add form input`
