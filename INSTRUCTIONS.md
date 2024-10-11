@@ -7,6 +7,7 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 
 1. 🤖 [Setup](#setup)
 2. ⚙️ [File & Folder Structure](#file-structure)
+3. ⚙️ [Home Page UI](#home-page-ui)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -42,3 +43,7 @@ put into root folder.
 ## <a name="file-structure">🤖 File structure</a>
 
 ...
+
+## <a name="home-page-ui">🤖 File structure</a>
+
+npm i query-string react-countup chart.js react-chartjs-2
