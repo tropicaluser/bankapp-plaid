@@ -44,6 +44,13 @@ put into root folder.
 
 ...
 
-## <a name="home-page-ui">🤖 File structure</a>
+## <a name="home-page-ui">⚙️ Home Page UI</a>
 
 npm i query-string react-countup chart.js react-chartjs-2
+
+## <a name="sidebar">⚙️ Sidebar</a>
+
+
+commit: "add sidebar"
+`npx shadcn@latest add sheet`
+
