@@ -10,6 +10,7 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 3. ⚙️ [Home Page UI](#home-page-ui)
 4. ⚙️ [Sidebar](#sidebar)
 5. ⚙️ [Auth Page UI](#auth-page-ui)
+6. ⚙️ [Appwrite Authentication](#appwrite-authentication)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -69,3 +70,56 @@ commit "custom input"
 
 ...
 
+## <a name="appwrite-authentication">⚙️ Appwrite Authentication</a>
+
+commit: add appwrite authentication & database
+
+https://appwrite.io/ - get started - create project 
+```
+name:jsm_banking
+region: frankfurt
+```
+copy project id to .env NEXT_PUBLIC_APPWRITE_PROJECT
+
+add .env NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+
+click "API key" - "name: jsm_bank_node" - "select all" - create
+copy api key secret to .env NEXT_APPWRITE_KEY
+
+click "overview" - databases - create database - "bank" - create
+copy database id to .env APPWRITE_DATABASE_ID
+
+click "create collection" - "users" - "create"
+copy users id to .env APPWRITE_USER_COLLECTION_ID
+
+click "create collection "banks" - create
+click "create collection "transactions" - create
+
+set users attributes
+```
+email - email - req
+string - userId - size: 2000 - req
+string - dwollaCustomerUrl - size: 2000 - req
+string - dwollaCustomerId - size: 2000 - req
+string - firstName - size: 100 - req
+string - lastName - size: 100 - req
+string - address1 - size: 100 - req
+string - city - size: 100 - req
+string - postalCode - size: 10 - req
+string - dateOfBirth - size: 100 - req
+string - ssn - size: 50 - req
+```
+
+visit: https://appwrite.io/docs/tutorials/nextjs-ssr-auth/step-1
+click "step2"
+click "step3" - Initialize SDK - copy to "lib/appwrite.js" (edited)
+
+`npm i node-appwrite`
+
+click "step4" - Get the logged in user - copy to lib/actions/user.actions.ts
+click "step5" - Create sign up page - signUpWithEmail - copy line 17-27 - copy to lib/actions/user.actions.ts - signup (edited)
+click "step6" - Create account page
+
+visit: localhost/sign-up - create an account - Link Account should be visible
+
+commit: ...

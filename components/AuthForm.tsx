@@ -15,7 +15,6 @@ import { authFormSchema } from "@/lib/utils";
 import { signIn, signUp } from "@/lib/actions/user.actions";
 
 const AuthForm = ({ type }: { type: string }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,10 +39,9 @@ const AuthForm = ({ type }: { type: string }) => {
       // Sign up with Appwrite & create plaid token
 
       if (type === "sign-up") {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const newUser = await signUp(data as SignUpParams);
 
-        //setUser(newUser);
+        setUser(newUser);
       }
 
       if (type === "sign-in") {
