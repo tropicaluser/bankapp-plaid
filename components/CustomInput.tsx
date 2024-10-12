@@ -6,7 +6,7 @@ import { z } from "zod";
 import { authFormSchema } from "@/lib/utils";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const formSchema = authFormSchema;
+const formSchema = authFormSchema("sign-up");
 
 interface CustomInput {
   control: Control<z.infer<typeof formSchema>>;

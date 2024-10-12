@@ -61,4 +61,11 @@ commit: "add sidebar left"
 
 ## <a name="auth-page-ui">⚙️ Auth Page UI</a>
 
+commit: "auth pages & skeleton auth form"
+
 `npx shadcn@latest add form input`
+
+commit "custom input"
+
+...
+
