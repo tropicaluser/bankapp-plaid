@@ -24,7 +24,7 @@ const RightSidebar = ({
         <div className="profile">
           <div className="profile-img">
             <span className="text-5xl font-bold text-blue-500">
-              {user?.name}
+              {user?.name[0]}
             </span>
           </div>
 
@@ -49,7 +49,7 @@ const RightSidebar = ({
             <div className="relative z-10 right-6 w-[95%]">
               <BankCard
                 account={banks[0]}
-                userName={`${user?.name ?? "Name"}`}
+                userName={user?.name ?? "Name"}
                 showBalance={false}
               />
             </div>
@@ -57,7 +57,7 @@ const RightSidebar = ({
               <div className="absolute right-0 top-8 z-0 w-[90%]">
                 <BankCard
                   account={banks[1]}
-                  userName={`${user?.name ?? "Name"}`}
+                  userName={user?.name ?? "Name"}
                   showBalance={false}
                 />
               </div>

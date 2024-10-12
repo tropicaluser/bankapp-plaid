@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from '@/components/Footer';
 import {
   Sheet,
   SheetClose,
@@ -12,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const MobileNav = () => {
+const MobileNav = ({user}: MobileNavProps) => {
   const pathname = usePathname();
 
   return (
@@ -82,7 +83,7 @@ const MobileNav = () => {
                 USER
               </nav>
             </SheetClose>
-            FOOTER
+            <Footer user={user} type="mobile" />
           </div>
         </SheetContent>
       </Sheet>
