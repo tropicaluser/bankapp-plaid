@@ -6,12 +6,13 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomInput from "@/components/CustomInput";
 import { authFormSchema } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 
 const AuthForm = ({ type }: { type: string }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,13 +31,36 @@ const AuthForm = ({ type }: { type: string }) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true);
-    console.log(values);
-    setIsLoading(false);
-  }
+
+    try {
+      // Sign up with Appwrite & create plaid token
+
+      if (type === "sign-up") {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newUser = await signUp(data as SignUpParams);
+
+        //setUser(newUser);
+      }
+
+      if (type === "sign-in") {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+
+        //if(response) router.push('/')
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <section className="auth-form">
