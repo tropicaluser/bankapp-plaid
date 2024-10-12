@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
@@ -17,6 +18,7 @@ import { signIn, signUp } from "@/lib/actions/user.actions";
 const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const formSchema = authFormSchema(type);
 
@@ -45,13 +47,12 @@ const AuthForm = ({ type }: { type: string }) => {
       }
 
       if (type === "sign-in") {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await signIn({
           email: data.email,
           password: data.password,
         });
 
-        //if(response) router.push('/')
+        if(response) router.push('/')
       }
     } catch (error) {
       console.log(error);

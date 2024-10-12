@@ -118,8 +118,11 @@ click "step3" - Initialize SDK - copy to "lib/appwrite.js" (edited)
 
 click "step4" - Get the logged in user - copy to lib/actions/user.actions.ts
 click "step5" - Create sign up page - signUpWithEmail - copy line 17-27 - copy to lib/actions/user.actions.ts - signup (edited)
-click "step6" - Create account page
 
 visit: localhost/sign-up - create an account - Link Account should be visible
 
-commit: ...
+commit: add sign-in
+
+visit localhost/sign-in - login
+
+
