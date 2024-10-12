@@ -8,28 +8,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormLabel } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import CustomInput from "@/components/CustomInput";
+import { authFormSchema } from '@/lib/utils';
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+
 
 const AuthForm = ({ type }: { type: string }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState(null);
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof authFormSchema>>({
+    resolver: zodResolver(authFormSchema),
     defaultValues: {
-      username: "",
+      email: "",
+      password: ""
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof authFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -67,15 +66,18 @@ const AuthForm = ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
+              <CustomInput
                 control={form.control}
-                name="username"
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                render={({ field }) => (
-                  <div className="form-item">
-                    <FormLabel className="form-label">Email</FormLabel>
-                  </div>
-                )}
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
+              />
+
+              <CustomInput
+                control={form.control}
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
               />
               <Button type="submit">Submit</Button>
             </form>
