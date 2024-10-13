@@ -298,3 +298,11 @@ string - email -req (200)
 ## <a name="recent-transactions">⚙️ Recent Transactions</a>
 
 `npx shadcn@latest add tabs table`
+
+## <a name="connect-multiple-bank-accounts">⚙️ Connect Multiple Bank Accounts</a>
+
+visit: localhost
+- click connect bank - continue - chase - continue to login - sign in with (user_good / pass_good)
+- get code - submit - tick plaid saving - continue - tick terms - continue
+- plaid saving should be visible
+- 
