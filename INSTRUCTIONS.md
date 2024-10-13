@@ -13,6 +13,7 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 6. ⚙️ [Appwrite Authentication](#appwrite-authentication)
 7. ⚙️ [Sentry Security](#sentry-security)
 8. ⚙️ [Plaid Functionality](#plaid-functionality)
+9. ⚙️ [Dwolla Environment](#dwolla-environment)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -164,6 +165,7 @@ PLAID_COUNTRY_CODES=US,CA
 `npm i plaid react-plaid-link dwolla-v2`
 
 visit: https://plaid.com/docs/link/web/#create - Link Web SDK
+
 visit: https://developers.dwolla.com/docs/balance/transfer-money-between-users/create-transfer
 
 visit: https://cloud.appwrite.io/ - databases - bank - banks - create attributes
@@ -178,6 +180,8 @@ relationship - one-way - users - many-to-one (change attribute key to userId) - 
 
 click databases - banks - users - (should be empty)
 click auth - remove all users
+
+## <a name="dwolla-environment">⚙️ Dwolla Environment</a>
 
 visit: <https://accounts-sandbox.dwolla.com/login> - create an account - verify email
 click applications - copy key and secret to .env
@@ -212,13 +216,26 @@ visit: <https://dashboard-sandbox.dwolla.com/applications-legacy>
 --- 3. error: "plaidlink component" ---
 fix code in onSuccess function
 
---- 3. error: "user.actions - createLinkToken" ---
+--- 4. error: "user.actions - createLinkToken" ---
 change client_name: user.name
 to client_name: `${user.firstName} ${user.lastName}`,
 
 <!-->
 
 visit: localhost/sign-up - create account
+
+```
+first name: dev
+last name: gonna
+address: 1234 main st
+city: New York City
+state: NY
+postal code: 11101
+date of birth: 1984-01-01
+ssn: 1234
+email: email@email.com
+password: password
+```
 
 - link account should be visible
 - click connect bank - plaid link should be visible
@@ -244,4 +261,32 @@ password: pass_good
 
 - (success message) - continue
 - automatically redirect to dashboard
+```
+
+## <a name="display-real-bank-data">⚙️ Display Real Bank Data</a>
+
+visit: localhost
+
+<!--> X Errors (fixed in edited version)
+
+--- 1. error: "undefined accessToken" ---
+
+--- 2. error: "Invalid query: Query value is invalid for attribute "$id"" ---
+
+lib/actions/user.actions.ts - signin - create getUserInfo
+
+<!->
+
+!Big FIX - Add attributes to transactions database in appwrite
+
+``` (all 2000 size)
+string - name - req (200)
+string - amount - req
+string - channel - req
+string - category - req
+string - senderId - req
+string - recieveId - req
+string - senderBankId - req
+string - receiverBankId - req
+string - email -req (200)
 ```
