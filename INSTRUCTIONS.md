@@ -11,6 +11,7 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 4. ⚙️ [Sidebar](#sidebar)
 5. ⚙️ [Auth Page UI](#auth-page-ui)
 6. ⚙️ [Appwrite Authentication](#appwrite-authentication)
+7. ⚙️ [Sentry Security](#sentry-security)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -125,4 +126,21 @@ commit: add sign-in
 
 visit localhost/sign-in - login
 
+commit: add footer & logout
+
+## <a name="sentry-security">⚙️ Sentry Security</a>
+
+https://sentry.io/welcome/ - sign in - quick start
+create a project
+```
+platform: nextjs
+> continue
+npx @sentry/wizard@latest -i nextjs --saas --org org-b1 --project javascript-nextjs
+MORE INFO @ SENTRY-SETUP.md
+```
+
+visit: localhost/sentry-example-page
+click "throw error"
+visit: https://org-b1.sentry.io/issues/
+click "replays" - "open replay" 
 
