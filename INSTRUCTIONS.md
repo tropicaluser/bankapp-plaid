@@ -14,6 +14,8 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 7. ⚙️ [Sentry Security](#sentry-security)
 8. ⚙️ [Plaid Functionality](#plaid-functionality)
 9. ⚙️ [Dwolla Environment](#dwolla-environment)
+10. ⚙️ [Display Real Bank Data](#display-real-bank-data)
+11. ⚙️ [Recent Transactions](#recent-transactions)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -275,7 +277,7 @@ visit: localhost
 
 lib/actions/user.actions.ts - signin - create getUserInfo
 
-<!->
+
 
 !Big FIX - Add attributes to transactions database in appwrite
 
@@ -290,3 +292,9 @@ string - senderBankId - req
 string - receiverBankId - req
 string - email -req (200)
 ```
+
+<!-->
+
+## <a name="recent-transactions">⚙️ Recent Transactions</a>
+
+`npx shadcn@latest add tabs table`
