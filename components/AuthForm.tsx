@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomInput from "@/components/CustomInput";
+import PlaidLink from '@/components/PlaidLink';
 import { authFormSchema } from "@/lib/utils";
 import { signIn, signUp } from "@/lib/actions/user.actions";
 
@@ -88,7 +89,9 @@ const AuthForm = ({ type }: { type: string }) => {
         </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">{/* PlaidLink */}</div>
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary" />
+        </div>
       ) : (
         <>
           <Form {...form}>
@@ -182,7 +185,7 @@ const AuthForm = ({ type }: { type: string }) => {
             </form>
           </Form>
         </>
-      )}
+      )} 
       <footer className="flex justify-center gap-1">
         <p className="text-14 font-normal text-gray-600">
           {type === "sign-in"

@@ -12,6 +12,7 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 5. ⚙️ [Auth Page UI](#auth-page-ui)
 6. ⚙️ [Appwrite Authentication](#appwrite-authentication)
 7. ⚙️ [Sentry Security](#sentry-security)
+8. ⚙️ [Plaid Functionality](#plaid-functionality)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -105,6 +106,7 @@ string - dwollaCustomerId - size: 2000 - req
 string - firstName - size: 100 - req
 string - lastName - size: 100 - req
 string - address1 - size: 100 - req
+string - state - size: 1000 - req
 string - city - size: 100 - req
 string - postalCode - size: 10 - req
 string - dateOfBirth - size: 100 - req
@@ -144,3 +146,102 @@ click "throw error"
 visit: https://org-b1.sentry.io/issues/
 click "replays" - "open replay" 
 
+## <a name="plaid-functionality">⚙️ Plaid Functionality</a>
+
+visit: https://plaid.com - get started - business or developer - enter credentials - create account - verify email
+click "Learn how to build with Plaid - quickstart" - 
+click "platform - developers" - keys - "enable two-auth app" - 
+copy to . env
+```
+# PLAID
+PLAID_CLIENT_ID= (client_id)
+PLAID_SECRET= (sandbox)
+PLAID_ENV=sandbox
+PLAID_PRODUCTS=auth,transactions,identity
+PLAID_COUNTRY_CODES=US,CA
+```
+
+`npm i plaid react-plaid-link dwolla-v2`
+
+visit: https://plaid.com/docs/link/web/#create - Link Web SDK
+visit: https://developers.dwolla.com/docs/balance/transfer-money-between-users/create-transfer
+
+visit: https://cloud.appwrite.io/ - databases - bank - banks - create attributes
+```
+string - accountId - size: 2000 - req
+string - bankId - size: 2000 - req
+string - accessToken - size: 2000 - req
+string - fundingSourceUrl - size: 2000 - req
+string - shareableId - size: 2000 - req
+relationship - one-way - users - many-to-one (change attribute key to userId) - on delete set null
+```
+
+click databases - banks - users - (should be empty)
+click auth - remove all users
+
+visit: <https://accounts-sandbox.dwolla.com/login> - create an account - verify email
+click applications - copy key and secret to .env
+
+visit: localhost/sign-up
+
+<!--> 4 Errors (fixed in edited version)
+--- 1. error "invalid state attr" ---
+visit: <https://cloud.appwrite.io/> - databases - bank - banks - users - attributes
+`string - state - size: 1000 - req`
+
+- auth - remove users
+
+visit: <https://dashboard-sandbox.dwolla.com/applications-legacy>
+
+- customers - deactivate new customer
+
+visit: localhost/sign-up
+
+--- 2. error: "invalid password attr" ---
+
+lib/actions/user.actions.ts - signup - change parameters
+
+visit: <https://cloud.appwrite.io/>
+
+- auth - remove users
+
+visit: <https://dashboard-sandbox.dwolla.com/applications-legacy>
+
+- customers - deactivate new customer
+
+--- 3. error: "plaidlink component" ---
+fix code in onSuccess function
+
+--- 3. error: "user.actions - createLinkToken" ---
+change client_name: user.name
+to client_name: `${user.firstName} ${user.lastName}`,
+
+<!-->
+
+visit: localhost/sign-up - create account
+
+- link account should be visible
+- click connect bank - plaid link should be visible
+- continue
+```
+select chase - continue to login
+- enter username / password (coming from plaid dashboard)
+
+visit: https://dashboard.plaid.com/overview
+- developers - sandbox
+```
+username: user_good
+password: pass_good
+```
+
+- integrations - enable dwolla
+
+- first platypus bank - sign in with credentials
+- (mobile) get code - submit
+- select checking & saving
+- tick boxes - continue
+- tick terms - continue
+
+- (success message) - continue
+- automatically redirect to dashboard
+```
