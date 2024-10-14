@@ -179,6 +179,11 @@ export const getTransactions = async ({
       hasMore = data.has_more;
     }
 
+    // add other data to transactions
+    // 1. get csv translate to json
+    // 2. make sure it has all properties
+    // 3. send back csv instead of transcations
+
     return parseStringify(transactions);
   } catch (error) {
     console.error("An error occurred while getting the accounts:", error);

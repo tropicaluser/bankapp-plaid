@@ -23,10 +23,10 @@ const Category = ({ category }: CategoryProps) => {
       <div className="flex w-full flex-1 flex-col gap-2">
         <div className="text-14 flex justify-between">
           <h2 className={cn("font-medium", main)}>{category.name}</h2>
-          <h3 className={cn("font-normal", count)}>{category.count}</h3>
+          <h3 className={cn("font-normal", count)}>${category.totalAmount + 2000} left</h3>
         </div>
         <Progress
-          value={(category.count / category.totalCount) * 100}
+          value={Number(((Math.abs(category.totalAmount) / 2000) * 100).toFixed(2))}
           className={cn("h-2 w-full", progressBg)}
           indicatorClassName={cn("h-2 w-full", indicator)}
         />

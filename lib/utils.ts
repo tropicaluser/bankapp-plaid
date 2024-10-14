@@ -134,21 +134,26 @@ export function getAccountTypeColors(type: AccountTypes) {
 export function countTransactionCategories(
   transactions: Transaction[]
 ): CategoryCount[] {
-  const categoryCounts: { [category: string]: number } = {};
+  const categoryCounts: { [category: string]: { count: number; totalAmount: number } } = {};
   let totalCount = 0;
 
   // Iterate over each transaction
   transactions &&
     transactions.forEach((transaction) => {
-      // Extract the category from the transaction
+      // Extract the category and amount from the transaction
       const category = transaction.category;
+      const amount = Number(transaction.amount as unknown as string); // Convert amount to number
 
-      // If the category exists in the categoryCounts object, increment its count
+      // If the category exists in the categoryCounts object, increment its count and add the amount
       if (categoryCounts.hasOwnProperty(category)) {
-        categoryCounts[category]++;
+        categoryCounts[category].count++;
+        categoryCounts[category].totalAmount += amount;
       } else {
-        // Otherwise, initialize the count to 1
-        categoryCounts[category] = 1;
+        // Otherwise, initialize the count to 1 and set the totalAmount to the transaction amount
+        categoryCounts[category] = {
+          count: 1,
+          totalAmount: amount,
+        };
       }
 
       // Increment total count
@@ -159,13 +164,21 @@ export function countTransactionCategories(
   const aggregatedCategories: CategoryCount[] = Object.keys(categoryCounts).map(
     (category) => ({
       name: category,
-      count: categoryCounts[category],
+      count: categoryCounts[category].count,
+      totalAmount: Math.floor(Number(categoryCounts[category].totalAmount)),
       totalCount,
+      maxAmount: 2000
     })
   );
 
   // Sort the aggregatedCategories array by count in descending order
   aggregatedCategories.sort((a, b) => b.count - a.count);
+
+  // make sure totalAmount is converted to a negative number
+  aggregatedCategories.forEach((category) => {
+    // Make sure totalAmount is converted to a negative number
+    category.totalAmount = -Math.abs(category.totalAmount); // Ensure it is always negative
+  });
 
   return aggregatedCategories;
 }
