@@ -337,3 +337,7 @@ click "transfer funds"
 - appwrite - transactions document - one document created
 - https://accounts-sandbox.dwolla.com/ - transfers - one document in processed (no new)
 - customers - enter user - 10.00 pending
+
+takes 1-2 days for transfer to be processed
+
+## <a name="pagination-and-spending-categories">⚙️ Transfer Payment Page</a>

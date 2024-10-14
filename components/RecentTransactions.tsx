@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BankTabItem } from "@/components/BankTabItem";
 import BankInfo from '@/components/BankInfo';
 import TransactionsTable from '@/components/TransactionsTable';
+import { Pagination } from '@/components/Pagination';
 
 const RecentTransactions = ({
   accounts,
@@ -12,6 +15,7 @@ const RecentTransactions = ({
   page = 1,
 }: RecentTransactionsProps) => {
   const rowsPerPage = 10;
+  const totalPages = Math.ceil(transactions.length / rowsPerPage);
 
   const indexOfLastTransaction = page * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
@@ -57,6 +61,7 @@ const RecentTransactions = ({
               type="full"
             />
             <TransactionsTable transactions={currentTransactions} />
+            <Pagination page={page} totalPages={totalPages} />
           </TabsContent>
         ))}
       </Tabs>
