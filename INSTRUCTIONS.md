@@ -280,22 +280,6 @@ visit: localhost
 
 lib/actions/user.actions.ts - signin - create getUserInfo
 
-
-
-!Big FIX - Add attributes to transactions database in appwrite
-
-``` (all 2000 size)
-string - name - req (200)
-string - amount - req
-string - channel - req
-string - category - req
-string - senderId - req
-string - recieveId - req
-string - senderBankId - req
-string - receiverBankId - req
-string - email -req (200)
-```
-
 <!-->
 
 ## <a name="recent-transactions">⚙️ Recent Transactions</a>
@@ -314,3 +298,42 @@ visit: localhost
 ...
 
 ## <a name="my-banks-page">⚙️ My Banks Page</a>
+
+...
+
+## <a name="transfer-payment-page">⚙️ Transfer Payment Page</a>
+
+`npx shadcn@latest add select textarea`
+
+appwrite - transactions attributes
+
+```bash
+string - name - size 100 - req (200)
+string - amount size 100 - req
+string - channel - size 100 - req
+string - category - size 100 - req
+string - senderId - size 1000 - req
+string - recieverId - size 1000 - req
+string - senderBankId - size 1000 - req
+string - receiverBankId - size 1000 - req
+string - email - size 100 - req
+```
+
+transfer money from savings to checking
+
+visit: localhost/my-banks - copy savings (2nd) id
+visit: localhost/payment-transfer
+```
+source: plaid checking
+note: test transfer
+email: email@email.com
+sharable id: <copied id>
+amount: 10.00
+```
+click "transfer funds"
+
+- show up under recent transactions "test transfer" - processing
+
+- appwrite - transactions document - one document created
+- https://accounts-sandbox.dwolla.com/ - transfers - one document in processed (no new)
+- customers - enter user - 10.00 pending
