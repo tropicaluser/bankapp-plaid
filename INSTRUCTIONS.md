@@ -341,3 +341,5 @@ click "transfer funds"
 takes 1-2 days for transfer to be processed
 
 ## <a name="pagination-and-spending-categories">⚙️ Transfer Payment Page</a>
+
+`npx shadcn@latest add progress`
