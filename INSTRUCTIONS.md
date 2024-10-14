@@ -16,6 +16,9 @@ Flow Diagram: https://resource.jsmastery.pro/banking-app-flow
 9. ⚙️ [Dwolla Environment](#dwolla-environment)
 10. ⚙️ [Display Real Bank Data](#display-real-bank-data)
 11. ⚙️ [Recent Transactions](#recent-transactions)
+12. ⚙️ [Connect Multiple Bank Accounts](#connect-multiple-bank-accounts)
+13. ⚙️ [Transaction History Page](#transaction-history-page)
+14. ⚙️ [My Banks Page](#my-banks-page)
 
 ## <a name="setup">🤖 Setup</a>
 
@@ -307,3 +310,7 @@ visit: localhost
 - plaid saving should be visible
 
 ## <a name="transaction-history-page">⚙️ Transaction History Page</a>
+
+...
+
+## <a name="my-banks-page">⚙️ My Banks Page</a>
