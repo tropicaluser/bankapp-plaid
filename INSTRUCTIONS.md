@@ -305,4 +305,5 @@ visit: localhost
 - click connect bank - continue - chase - continue to login - sign in with (user_good / pass_good)
 - get code - submit - tick plaid saving - continue - tick terms - continue
 - plaid saving should be visible
-- 
+
+## <a name="transaction-history-page">⚙️ Transaction History Page</a>
