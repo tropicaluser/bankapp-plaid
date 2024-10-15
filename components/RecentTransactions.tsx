@@ -8,12 +8,33 @@ import BankInfo from '@/components/BankInfo';
 import TransactionsTable from '@/components/TransactionsTable';
 import { Pagination } from '@/components/Pagination';
 
+import Csv from '@/components/Csv';
+import { useEffect, useState } from 'react';
+
 const RecentTransactions = ({
   accounts,
-  transactions = [],
+  transactions: initialTransactions = [],
   appwriteItemId,
   page = 1,
 }: RecentTransactionsProps) => {
+  const [transactions, setTransactions] = useState(initialTransactions);
+  const [csvTransactions, setCsvTransactions] = useState([]);
+
+  // Merge transactions whenever csvTransactions changes
+  useEffect(() => {
+    if (csvTransactions.length > 0) {
+
+      const allTransactions = [...transactions, ...csvTransactions].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+      setTransactions(allTransactions);
+      
+      // Clear csvTransactions after merging, if desired
+      setCsvTransactions([]);
+    }
+  }, [csvTransactions, transactions]);
+
   const rowsPerPage = 10;
   const totalPages = Math.ceil(transactions.length / rowsPerPage);
 
@@ -23,11 +44,16 @@ const RecentTransactions = ({
   const currentTransactions = transactions.slice(
     indexOfFirstTransaction, indexOfLastTransaction
   )
+
+  console.log('csvTransactions', csvTransactions)
+
+  console.log('hello')
+
   return (
     <section className="recent-transactions">
       <header className="flex items-center justify-between">
         <h2 className="recent-transactions-label">Recent transactions</h2>
-        <p>- Import CSV -</p>
+        <Csv transactions={transactions} setCsvTransactions={setCsvTransactions} />
         <Link
           href={`/transaction-history/?id=${appwriteItemId}`}
           className="view-all-btn"
