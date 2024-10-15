@@ -10,6 +10,7 @@ import { Pagination } from '@/components/Pagination';
 
 import Csv from '@/components/Csv';
 import { useEffect, useState } from 'react';
+import { useTransactions } from '@/context/transactions.context';
 
 const RecentTransactions = ({
   accounts,
@@ -17,6 +18,7 @@ const RecentTransactions = ({
   appwriteItemId,
   page = 1,
 }: RecentTransactionsProps) => {
+  const {setTransactions: setContextTransactions} = useTransactions()
   const [transactions, setTransactions] = useState(initialTransactions);
   const [csvTransactions, setCsvTransactions] = useState([]);
 
@@ -31,9 +33,11 @@ const RecentTransactions = ({
       setTransactions(allTransactions);
       
       // Clear csvTransactions after merging, if desired
+      setContextTransactions(allTransactions)
+      
       setCsvTransactions([]);
     }
-  }, [csvTransactions, transactions]);
+  }, [csvTransactions, transactions, setTransactions, setContextTransactions]);
 
   const rowsPerPage = 10;
   const totalPages = Math.ceil(transactions.length / rowsPerPage);
@@ -53,7 +57,7 @@ const RecentTransactions = ({
     <section className="recent-transactions">
       <header className="flex items-center justify-between">
         <h2 className="recent-transactions-label">Recent transactions</h2>
-        <Csv transactions={transactions} setCsvTransactions={setCsvTransactions} />
+        <Csv setCsvTransactions={setCsvTransactions} />
         <Link
           href={`/transaction-history/?id=${appwriteItemId}`}
           className="view-all-btn"
@@ -87,6 +91,9 @@ const RecentTransactions = ({
               appwriteItemId={appwriteItemId}
               type="full"
             />
+
+            Another Table
+
             <TransactionsTable transactions={currentTransactions} />
             <Pagination page={page} totalPages={totalPages} />
           </TabsContent>

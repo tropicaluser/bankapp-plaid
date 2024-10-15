@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-prototype-builtins */
+import { objectPermExpense, objectPermExpenseValue } from '@/constants/const-transactions';
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
@@ -77,6 +78,16 @@ export function formatAmount(amount: number): string {
   return formatter.format(amount);
 }
 
+export function formatAmountSEK(amount: number): string {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "SEK",
+    minimumFractionDigits: 0,
+  });
+
+  return formatter.format(amount).replace("SEK", "");
+}
+
 export const parseStringify = (value: unknown) => JSON.parse(JSON.stringify(value));
 
 export const removeSpecialCharacters = (value: string) => {
@@ -129,6 +140,60 @@ export function getAccountTypeColors(type: AccountTypes) {
         subText: "text-green-700",
       };
   }
+}
+
+export function countPermTransactionCategories(
+  transactions: Transaction[]
+): CategoryCount[] {
+  // Create a structure to hold counts and amounts
+  const categoryCounts: { [category: string]: { count: number; totalAmount: number } } = {};
+  let totalCount = 0;
+
+  // Iterate over each transaction
+  transactions &&
+    transactions.forEach((transaction) => {
+      // Extract the category and amount from the transaction
+      const category = transaction.category;
+      const amount = Number(transaction.amount); // Convert amount to number
+
+      // Increment total count of transactions
+      totalCount++;
+
+      // If the category is in objectPermExpense, add or update the categoryCounts
+      if (category in objectPermExpense) {
+        // Check if the category already exists
+        if (categoryCounts.hasOwnProperty(category)) {
+          // Existing category: increment count and add to totalAmount
+          categoryCounts[category].count++;
+          categoryCounts[category].totalAmount += amount; // Sum the amount
+        } else {
+          // Initialize if the category is not found in categoryCounts
+          categoryCounts[category] = {
+            count: 1, // Initialize count to 1 for new categories
+            totalAmount: amount, // Set totalAmount to the current transaction amount
+          };
+        }
+      }
+    });
+
+  // Include all categories from objectPermExpense
+  const aggregatedCategories: CategoryCount[] = Object.keys(objectPermExpense).map((category) => ({
+    name: category,
+    count: categoryCounts[category]?.count || 0, // Get count or 0 if it doesn't exist
+    totalAmount: Number(categoryCounts[category]?.totalAmount.toFixed(0)) || 0, // Get totalAmount or 0 if it doesn't exist
+    totalCount,
+    maxAmount: objectPermExpenseValue[category],
+  }));
+
+  // Sort the aggregatedCategories array by count in descending order
+  aggregatedCategories.sort((a, b) => b.count - a.count);
+
+  // Ensure totalAmount is converted to a negative number
+  aggregatedCategories.forEach((category) => {
+    category.totalAmount = -Math.abs(category.totalAmount); // Ensure it is always negative
+  });
+
+  return aggregatedCategories;
 }
 
 export function countTransactionCategories(

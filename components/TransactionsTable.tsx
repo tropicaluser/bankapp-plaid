@@ -10,6 +10,7 @@ import { transactionCategoryStyles } from "@/constants";
 import {
   cn,
   formatAmount,
+  formatAmountSEK,
   formatDateTime,
   getTransactionStatus,
   removeSpecialCharacters,
@@ -45,7 +46,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
       <TableBody>
         {transactions.map((t: Transaction) => {
           const status = getTransactionStatus(new Date(t.date));
-          const amount = formatAmount(t.amount);
+          const amount = formatAmountSEK(t.amount);
 
           const isDebit = t.type === "debit";
           const isCredit = t.type === "credit";
@@ -72,7 +73,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                     : "text-[#039855]"
                 }`}
               >
-                {isDebit ? `-${amount}` : isCredit ? amount : amount}
+                {isDebit ? `${amount}` : isCredit ? amount : amount}
               </TableCell>
 
               <TableCell className="pl-2 pr-10">

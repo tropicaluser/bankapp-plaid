@@ -1,12 +1,50 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import BankCard from "@/components/BankCard";
-import { countTransactionCategories } from '@/lib/utils';
-import Category from '@/components/Category';
+import { countPermTransactionCategories, countTransactionCategories } from "@/lib/utils";
+import Category from "@/components/Category";
+import { useTransactions } from "@/context/transactions.context";
+import { useEffect, useMemo, useState } from "react";
+import PermCategory from '@/components/PermCategory';
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
-  const categories: CategoryCount[] = countTransactionCategories(transactions);
+
+  const [initialTransactions, setInitialTransactions] = useState<Transaction[]>(
+    []
+  );
+  const { transactions: contextTransactions } = useTransactions();
+
+  // Merge initialTransactions when contextTransactions change
+  useEffect(() => {
+    if (contextTransactions.length > 0) {
+      setInitialTransactions((prevTransactions) => [
+        ...prevTransactions,
+        ...contextTransactions,
+      ]);
+    }
+  }, [contextTransactions]);
+
+  // Assuming `initialTransactions` is defined and each transaction has a `permanent` property
+  const permanentTransactions = useMemo(() => {
+    return initialTransactions.filter((transaction) => transaction.permanent);
+  }, [initialTransactions]);
+
+  const nonPermanentTransactions = useMemo(() => {
+    return initialTransactions.filter((transaction) => !transaction.permanent);
+  }, [initialTransactions]);
+
+  // Count categories for each filtered array
+  const permanentCategories = useMemo(() => {
+    return countPermTransactionCategories(permanentTransactions);
+  }, [permanentTransactions]);
+
+  const nonPermanentCategories = useMemo(() => {
+    return countTransactionCategories(nonPermanentTransactions);
+  }, [nonPermanentTransactions]);
+
   return (
     <aside className="right-sidebar">
       <section className="flex flex-col pb-8">
@@ -28,7 +66,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
       </section>
 
       <section className="banks">
-        <div className="flex w-full justify-between">
+         <div className="flex w-full justify-between">
           <h2 className="header-2">My Banks</h2>
           <Link href="/" className="flex gap-2">
             <Image src="/icons/plus.svg" width={20} height={20} alt="plus" />
@@ -60,10 +98,14 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
         )}
 
         <div className="mt-10 flex flex-1 flex-col gap-6">
+          <h2 className="header-2">Perm categories</h2>
+          {permanentCategories.map((category) => (
+            <PermCategory key={category.name} category={category} />
+          ))}
           <h2 className="header-2">Top categories</h2>
 
           <div className="space-y-5">
-            {categories.map((category) => (
+            {nonPermanentCategories.map((category) => (
               <Category key={category.name} category={category} />
             ))}
           </div>

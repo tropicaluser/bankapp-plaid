@@ -1,3 +1,169 @@
+export const objectCustomExpense = {
+  Okänd: [
+    "DIREKTEN TOP",
+    "TALLINN",
+    "PHOENIX ",
+    "1231901461",
+    "8662781349",
+    "1232900371",
+    "1233199221",
+    "1236218176",
+    "1236417380",
+    "8662781349",
+    "SEATTLE",
+    "KFUM REPRIS",
+    "GREENSLOPES",
+    "GOOGLE  GOOG",
+    "BIRMINGHAM",
+  ],
+  Räkning: ["VISMA FINANCIAL SOLUTION", "QLIRO"],
+  Hälsa: [
+    "APOTEKET KOR",
+    "APOTEKET AB",
+    "REGIONSERVICE PATIENTFAK",
+    "APOTEKSGRUPP",
+    "K*FOTBUTIKEN",
+  ],
+  Nöje: [
+    "BOLT EU",
+    "CAPITOL ",
+    "AMAZONRETAIL",
+    "K*SPELBUTIKE",
+    "RIOT  AE3N32",
+    "RIOT  AE35HZ",
+    "HAGABIONS CA",
+    "KJELL & CO 1",
+    "KJELL & CO 3",
+    "BIO ROY",
+    "RÖHSSKA MUSE",
+    "MYRORNA BUTI",
+    "NORMAL MÖLND",
+    "NORMAL VÄSTR",
+  ],
+  Present: ["DESIGNTORGET", "AMAZONMKTPLC", "ANTIQVARIA A"],
+  Resor: ["VÄSTTRAFIK A", "VASTTRAFIK T", "RYDE SWEDEN", "VOI SE"],
+  Träning: ["NW GOTEBORG ", "NORDICWELL", "SPORTLIFE M", "FTC MOLNDAL"],
+  Övrigt: [
+    "SAN FR",
+    "DUBLIN",
+    "DELABO",
+    "VÄSTRA GÖTAL",
+    "BJORKAFRIHET",
+    "BILLOGRAM",
+    "WH GOTEBORG",
+    "SAN FRANSICO",
+    "SAN FRANCISC",
+    "WH GOTEBORG ",
+    "GÖTEBORGS UN",
+    "K*ETSY.COM",
+    "EC STATIONS",
+    "AKADEMIBOKHA",
+    "KLARNA BANK",
+  ],
+  Mat: [
+    "COOP AVENYN",
+    "WILLYS WIESE",
+    "WILLYS GOTEB",
+    "WILLYS HEMMA",
+    "WILLY:S AB",
+    "LIDL 346",
+    "LIDL 326",
+    "HEMKOP",
+    "HEMKOP GOTEG",
+    "HEMKOP TROLL",
+    "NYTTIG",
+    "4 GOTT AVENY",
+    "COOP AVENYN",
+    "HEMKOP GOTEB",
+    "ICA KVANTUM",
+    "LIDL 326 MÖL",
+    "STORA COOP B",
+    "MAXI ICA STO",
+  ],
+  Utemat: [
+    "RESTAURANG C",
+    "FLODAJERNVEG",
+    "LILLA TOKYO",
+    "KROKSLATTS L",
+    "KROKSLATTS S",
+    "SALTES RESTA",
+    "7-ELEVEN GBG",
+    "7ELEVEN GBG",
+    "4415193 7-EL",
+    "4128113 PRES",
+    "4028150 PRES",
+    "4428155 PRES",
+    "LE SUSHIBAR ",
+    "ESPRESSO H 2",
+    "K*FOODORA AB",
+    "NYTTIG SNABB",
+    "PIZZA 4 YOU",
+    "ONEFOOD",
+    "OAKVILLE",
+    "NW GOTEBORG",
+    "LE SUSHIBAR",
+    "DELABOLE",
+    "EDO SUSHI",
+    "ESPRESSO HOU",
+    "KARAMELLBYRA",
+    "MASAKI SUSHI",
+    "JAPAN HOUSE",
+    "VIETNAMHAKET",
+    "SUSHI MÖLNDA",
+    "HEMMAKVÄLL M",
+    "DA MARIO",
+  ],
+};
+
+
+export const objectCustomExpenseTemp: ObjectPermExpense = {
+  Mat: ["WILLYS GOTEB"],
+  Food: ["DESIGNTORGET", "AMAZONMKTPLC", "ANTIQVARIA A"],
+  Travel: ["VÄSTTRAFIK A", "VASTTRAFIK T", "RYDE SWEDEN", "VOI SE"],
+};
+
+export interface ObjectPermExpense {
+  [key: string]: string[];
+}
+
+export const objectPermExpense: ObjectPermExpense = {
+  Hyra: ["HSB MÖLNDAL EK. FÖR."],
+  SEB_Enkla: ["ENKLA VARDAG"],
+  Hemförsäkring: ["IF SKADEFÖRS"],
+  Hyresgästförening: ["HYRESGÄSTFÖR"],
+  Akassa: ["UNIONENS ARBETSLÖSHETSKA"],
+  LÅN_MoneyGo: ["MONEYGO AB"],
+  LÅN_SEB: ["LÅNEOMS"],
+  El: ["MÖLNDAL ENERGI AB"],
+  Telefon: ["VIMLA", "HALLON"],
+  Media: ["TELENOR"],
+  Abonnemang: ["FRISKTANDV", "GOTEBORGS-PO", "UNIONEN", "UNION.AKASSA"],
+};
+
+export interface ObjectPermExpenseValue {
+  [key: string]: number;
+}
+
+export const objectPermExpenseValue: ObjectPermExpenseValue = {
+  Hyra: 6015,
+  SEB_Enkla: 50,
+  Hemförsäkring: 73,
+  Hyresgästförening: 85,
+  Akassa: 140,
+  LÅN_MoneyGo: 100,
+  LÅN_SEB: 1080,
+  El: 242,
+  Telefon: 118,
+  Media: 199,
+  Abonnemang: 165,
+};
+
+export const combinedExpenses: ObjectPermExpense = {
+  ...objectCustomExpense,
+  ...objectPermExpense,
+};
+
+
 export const transactionData = [
   {
     "id": "670cf4580005ccf18f23",

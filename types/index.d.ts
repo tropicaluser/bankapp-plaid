@@ -80,6 +80,7 @@ declare type Transaction = {
   channel: string;
   senderBankId: string;
   receiverBankId: string;
+  permanent: boolean;
 };
 
 declare type Bank = {
@@ -106,6 +107,7 @@ declare type CategoryCount = {
   count: number;
   totalCount: number;
   totalAmount: number;
+  maxAmount: number;
 };
 
 declare type Receiver = {

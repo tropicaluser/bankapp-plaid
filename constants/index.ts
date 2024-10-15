@@ -1,3 +1,6 @@
+export const valueSignUSD = "$";
+export const valueSignSEK = "";
+
 export const sidebarLinks = [
   {
     imgURL: "/icons/home.svg",
@@ -98,6 +101,36 @@ export const transactionCategoryStyles = {
     textColor: "text-pink-700",
     chipBackgroundColor: "bg-inherit",
   },
+  "Resor": {
+    borderColor: "border-blue-600",
+    backgroundColor: "bg-blue-500",
+    textColor: "text-blue-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  "Nöje": {
+    borderColor: "border-[#12B76A]",
+    backgroundColor: "bg-[#12B76A]",
+    textColor: "text-[#027A48]",
+    chipBackgroundColor: "bg-[#ECFDF3]",
+  },
+  "Mat": {
+    borderColor: "border-pink-600",
+    backgroundColor: "bg-pink-500",
+    textColor: "text-pink-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  "Utemat": {
+    borderColor: "border-success-600",
+    backgroundColor: "bg-green-600",
+    textColor: "text-success-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  "SEB": {
+    borderColor: "border-red-700",
+    backgroundColor: "bg-red-700",
+    textColor: "text-red-700",
+    chipBackgroundColor: "bg-inherit",
+  },
   Payment: {
     borderColor: "border-success-600",
     backgroundColor: "bg-green-600",
@@ -134,4 +167,5 @@ export const transactionCategoryStyles = {
     textColor: "text-blue-700",
     chipBackgroundColor: "bg-inherit",
   },
+
 };

@@ -1,20 +1,66 @@
+import { combinedExpenses, objectPermExpense, ObjectPermExpense } from '@/constants/const-transactions';
 import { useState } from "react";
 import * as XLSX from "xlsx";
 
-const excelHeader = [
-  "bokford",
-  "valuta",
-  "nummer",
-  "text",
-  "belopp",
-  "saldo",
-];
+const excelHeader = ["bokford", "valuta", "nummer", "text", "belopp", "saldo"];
 
-const CONST_FIRST_DAY_OF_YEAR = "2024-01-01";
+interface CsvProps {
+  setCsvTransactions: Function
+}
 
-export default function Csv({transactions, setCsvTransactions}: any) {
-  const [items, setItems] = useState([]);
-  console.log('items', items)
+export default function Csv({ setCsvTransactions }: CsvProps) {
+
+  const getSEBCategory = (category: string) => {
+    // here come RYDE SWEDEN
+    const newCustomLogic = customLogic(category);
+    return newCustomLogic;
+  };
+
+  const customLogic = (item: string) => {
+    // Check if perm item
+
+    // Iterate through each category in the object
+    for (const category in combinedExpenses) {
+      // Type assertion to inform TypeScript that category is of type keyof CustomExpense
+      if (combinedExpenses.hasOwnProperty(category)) {
+        if (
+          combinedExpenses[category as keyof ObjectPermExpense].some((keyword) =>
+            item.includes(keyword)
+          )
+        ) {
+          return category; // Return the category name (e.g., "Food" or "Travel")
+        }
+      }
+    }
+
+    return "SEB"; // Default return value if no categories match
+  };
+
+  const customLogicGetText = (item: string) => {
+    // Split the string at the "/" character
+    const parts = item.split("/");
+
+    // Take the first part and trim any extra whitespace
+    const name = parts[0].trim();
+
+    return name;
+  };
+
+  const getPermCategory = (category: string) => {
+    // Iterate through each category in the object
+    for (const permCategory in objectPermExpense) {
+      // Check if any keyword in the category matches the input category
+      if (
+        objectPermExpense[permCategory].some((keyword) =>
+          category.includes(keyword)
+        )
+      ) {
+        return true; // Return the matched category name
+      }
+    }
+
+    return false; // Default return value if no categories match
+  };
 
   const readExcel = (file: Blob) => {
     const promise = new Promise((resolve, reject) => {
@@ -32,7 +78,8 @@ export default function Csv({transactions, setCsvTransactions}: any) {
         });
 
         // remove all rows before 2023-01-01 in fileData
-        fileData = fileData.splice(5).filter((item: any) => {
+        /*  fileData = fileData.splice(5).filter((item: any) => {
+
           const date = new Date(item.bokford);
 
           const yesterday = new Date();
@@ -42,22 +89,30 @@ export default function Csv({transactions, setCsvTransactions}: any) {
             item.saldo = "LAST";
           }
           return date >= new Date(CONST_FIRST_DAY_OF_YEAR);
+        }); */
+
+        fileData = fileData.splice(5).map((item: any) => {
+          return {
+            ...item, // Spread the existing properties of the item
+            text: customLogicGetText(item.text), // Set the 'text' property to the new value
+          };
         });
 
         const plaidTransactions = fileData.map((item: any) => {
           return {
-            id: item.nummer || "",  // Use 'nummer' for transaction ID.
-            name: item.text || "",  // Use 'text' for transaction description.
-            amount: item.belopp || 0,  // Use 'belopp' for the transaction amount.
-            date: item.bokford || "",  // Use 'bokford' for the date.
-            paymentChannel: "online",  // Example default value.
+            id: item.nummer || "", // Use 'nummer' for transaction ID.
+            name: item.text || "", // Use 'text' for transaction description.
+            amount: item.belopp || 0, // Use 'belopp' for the transaction amount.
+            date: item.bokford || "", // Use 'bokford' for the date.
+            paymentChannel: "online", // Example default value.
             pending: false,
-            category: "SEB",  // Use 'valuta' as a category or fallback.
-            type: item.belopp >= 0 ? "credit" : "debit",  // Positive amounts as credit, negative as debit.
+            category: getSEBCategory(item.text), // Use 'valuta' as a category or fallback.
+            type: item.belopp >= 0 ? "credit" : "debit", // Positive amounts as credit, negative as debit.
+            permanent: getPermCategory(item.text),
           };
         });
-        
-        console.log(plaidTransactions);
+
+        console.log("hello csv transactions", plaidTransactions);
 
         resolve(plaidTransactions);
       };
@@ -68,7 +123,6 @@ export default function Csv({transactions, setCsvTransactions}: any) {
     });
 
     promise.then((d) => {
-      setItems(d);
       setCsvTransactions(d);
     });
   };
